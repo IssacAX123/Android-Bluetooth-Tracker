@@ -3,8 +3,7 @@ name: Build and Test for Dev
 on:
   push:
     branches:
-      branches-ignore:
-      - 'main'
+      - '!main'
 
 jobs:
   build:
