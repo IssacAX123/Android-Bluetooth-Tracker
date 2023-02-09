@@ -20,7 +20,7 @@ jobs:
         java-version: 14
 
     - name: Install Android SDK
-      uses: actions/setup-android@v3
+      uses: actions/setup-android@v2
       with:
         android-sdk-version: 30
         components: build-tools;30.0.2,platform-tools,android-30
