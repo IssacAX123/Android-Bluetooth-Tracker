@@ -1,9 +1,10 @@
-name: Build and Test Android Project
+name: Build and Test for Dev
 
 on:
   push:
     branches:
-      - '*'
+      except:
+        - main
 
 jobs:
   build:
