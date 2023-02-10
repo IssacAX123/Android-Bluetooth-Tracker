@@ -1,0 +1,44 @@
+name: Build Debug APK
+
+on:
+  push:
+    branches:
+      - 'main'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Debug APK
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Install Android SDK
+      uses: android-actions/setup-android@v2
+      with:
+        android-sdk-version: 30
+        components: build-tools;30.0.2,platform-tools,android-30
+
+    - name: Build project
+      run: ./gradlew build
+
+    - name: Test project
+      run: ./gradlew test
+
+    - name: Build APK
+      run: ./gradlew assembleDebug
+
+    - name: Push APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: app.apk
+        path: app/build/outputs/apk/debug/app-debug.apk
