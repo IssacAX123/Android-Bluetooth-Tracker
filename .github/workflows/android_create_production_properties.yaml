@@ -1,0 +1,16 @@
+name: Create local.properties for production
+on:
+  workflow_call:
+
+jobs:
+  create-local-properties-production:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create local.properties
+        env:
+            AD_MAIN_ACTIVITY_INTERSTITIAL: ${{ secrets.AD_MAIN_ACTIVITY_INTERSTITIAL }}
+        run: |
+          echo "AD_MAIN_ACTIVITY_INTERSTITIAL=$AD_MAIN_ACTIVITY_INTERSTITIAL" > local.properties
