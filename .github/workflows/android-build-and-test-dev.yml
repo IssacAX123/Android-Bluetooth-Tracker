@@ -3,7 +3,7 @@ name: Build and Test for Dev
 on:
   push:
     branches:
-    - '!main'
+    - '*DEV*'
   workflow_dispatch:
 
 jobs:
