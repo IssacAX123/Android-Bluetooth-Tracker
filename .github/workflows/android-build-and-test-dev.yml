@@ -17,7 +17,8 @@ jobs:
 
     - name: Create local.properties
       run: |
-        echo "AD_MAIN_ACTIVITY_INTERSTITIAL=ca-app-pub-3940256099942544/1033173712" > local.properties
+        echo "AD_APP_ID=ca-app-pub-3940256099942544~3347511713" > local.properties
+        echo "AD_MAIN_ACTIVITY_INTERSTITIAL=ca-app-pub-3940256099942544/1033173712" >> local.properties
 
     - name: Setup Java
       uses: actions/setup-java@v3
