@@ -18,8 +18,10 @@ jobs:
     - name: Create local.properties
       env:
         AD_MAIN_ACTIVITY_INTERSTITIAL: ${{ secrets.AD_MAIN_ACTIVITY_INTERSTITIAL }}
+        AD_APP_ID: ${{ secrets.AD_APP_ID }}
       run: |
-        echo "AD_MAIN_ACTIVITY_INTERSTITIAL=$AD_MAIN_ACTIVITY_INTERSTITIAL" > local.properties
+        echo "AD_APP_ID=$AD_APP_ID" > local.properties
+        echo "AD_MAIN_ACTIVITY_INTERSTITIAL=$AD_APP_ID" >> local.properties
 
     - name: Setup Java
       uses: actions/setup-java@v3
