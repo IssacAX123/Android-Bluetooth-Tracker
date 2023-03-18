@@ -18,8 +18,16 @@ android {
 
         Properties properties = new Properties()
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
         buildConfigField "String", "AD_MAIN_ACTIVITY_INTERSTITIAL", "\"${properties.getProperty("AD_MAIN_ACTIVITY_INTERSTITIAL")}\""
+        buildConfigField "String", "AD_APP_ID", "\"${properties.getProperty("AD_APP_ID")}\""
+
+        manifestPlaceholders = [
+                AD_APP_ID: "${properties.getProperty('AD_APP_ID')}"
+        ]
     }
+
+
 
     buildTypes {
         release {
@@ -35,6 +43,9 @@ android {
         jvmTarget = '1.8'
     }
     viewBinding{
+        enabled=true
+    }
+    dataBinding{
         enabled=true
     }
 }
