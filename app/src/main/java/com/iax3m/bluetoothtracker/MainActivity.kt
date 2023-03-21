@@ -40,25 +40,21 @@ class MainActivity : AppCompatActivity() {
         val adRequest = AdRequest.Builder().build()
 
         InterstitialAd.load(this,BuildConfig.AD_MAIN_ACTIVITY_INTERSTITIAL, adRequest, object : InterstitialAdLoadCallback() {
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                mInterstitialAd = null
-            }
-
             override fun onAdLoaded(interstitialAd: InterstitialAd) {
                 mInterstitialAd = interstitialAd
+                mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+
+                    override fun onAdDismissedFullScreenContent() {
+                        val intent = Intent(this@MainActivity, DeviceListActivity::class.java)
+                        startActivity(intent)
+                        mInterstitialAd = null
+                    }
+
+                    override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                        mInterstitialAd = null
+                    }
+                }
             }
         })
-
-        mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
-
-            override fun onAdDismissedFullScreenContent() {
-                mInterstitialAd = null
-            }
-
-            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
-                mInterstitialAd = null
-            }
-
-        }
     }
 }
