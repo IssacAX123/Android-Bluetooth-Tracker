@@ -1,4 +1,4 @@
-package com.iax3m.bluetoothtracker
+package com.iax3m.bluetoothtracker.android
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.iax3m.bluetoothtracker.BuildConfig
 import com.iax3m.bluetoothtracker.databinding.ActivityMainBinding
 
 
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     fun getAdInterstitionalMainStart(){
         val adRequest = AdRequest.Builder().build()
 
-        InterstitialAd.load(this,BuildConfig.AD_MAIN_ACTIVITY_INTERSTITIAL, adRequest, object : InterstitialAdLoadCallback() {
+        InterstitialAd.load(this, BuildConfig.AD_MAIN_ACTIVITY_INTERSTITIAL, adRequest, object : InterstitialAdLoadCallback() {
             override fun onAdLoaded(interstitialAd: InterstitialAd) {
                 mInterstitialAd = interstitialAd
                 mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {

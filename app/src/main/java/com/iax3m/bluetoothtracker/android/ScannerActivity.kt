@@ -1,11 +1,12 @@
-package com.iax3m.bluetoothtracker
+package com.iax3m.bluetoothtracker.android
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.iax3m.bluetoothtracker.R
 
-class DeviceListActivity : AppCompatActivity() {
+class ScannerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_device_list)
+        setContentView(R.layout.activity_scanner)
     }
 }
