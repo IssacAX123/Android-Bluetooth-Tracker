@@ -28,11 +28,6 @@ android {
                 AD_APP_ID: "${properties.getProperty('AD_APP_ID')}"
         ]
     }
-
-
-    buildFeatures{
-        compose=true
-    }
     buildTypes {
         release {
             minifyEnabled false
