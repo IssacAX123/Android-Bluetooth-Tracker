@@ -8,9 +8,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
 
 @HiltViewModel
-class DeviceListViewModel constructor(
+class DeviceListViewModel @Inject constructor(
     private val bluetoothUtil: BluetoothUtil
 ): ViewModel() {
 
