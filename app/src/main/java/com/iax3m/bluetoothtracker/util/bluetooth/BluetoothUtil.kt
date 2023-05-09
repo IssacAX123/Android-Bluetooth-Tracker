@@ -6,12 +6,16 @@ import android.content.Context
 import android.content.IntentFilter
 import kotlin.collections.emptyList
 import android.content.pm.PackageManager
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityRetainedComponent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-
+@Module
+@InstallIn(ActivityRetainedComponent::class)
 class BluetoothUtil(var context: Context) {
     private val _devices= MutableStateFlow<List<BluetoothDevice>>(emptyList())
     val devices: StateFlow<List<BluetoothDevice>>

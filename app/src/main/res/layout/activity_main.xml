@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F0FFFF"
     tools:context=".android.MainActivity">
 
     <Button
         android:id="@+id/main_btn_start"
         android:layout_width="197dp"
         android:layout_height="93dp"
+        android:background="#6200ED"
         android:text="@string/main_btn_start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

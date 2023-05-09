@@ -3,7 +3,11 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.dagger.hilt.android'
 }
+
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.dagger.hilt.android'
 
 android {
     namespace 'com.iax3m.bluetoothtracker'
@@ -54,7 +58,7 @@ dependencies {
 
     implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
@@ -62,8 +66,19 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-ads:22.0.0'
 
-    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
-    implementation "com.google.dagger:hilt-android:2.42"
-    kapt "com.google.dagger:hilt-android-compiler:2.42"
-    kapt "androidx.hilt:hilt-compiler:1.0.0"
+    implementation 'androidx.hilt:hilt-navigation-fragment:1.0.0'
+    implementation 'com.google.dagger:hilt-android:2.46'
+    kapt 'com.google.dagger:hilt-compiler:2.46'
+
+    // For instrumentation tests
+    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.46'
+    kaptAndroidTest 'com.google.dagger:hilt-compiler:2.46'
+
+    // For local unit tests
+    testImplementation 'com.google.dagger:hilt-android-testing:2.46'
+    kaptTest 'com.google.dagger:hilt-compiler:2.46'
+}
+
+kapt {
+    correctErrorTypes true
 }

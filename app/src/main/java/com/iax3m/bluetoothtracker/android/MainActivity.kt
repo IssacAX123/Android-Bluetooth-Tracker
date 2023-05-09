@@ -10,8 +10,10 @@ import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.iax3m.bluetoothtracker.BuildConfig
 import com.iax3m.bluetoothtracker.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     lateinit var binding:ActivityMainBinding
     lateinit var mainBtnStart:Button
