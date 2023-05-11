@@ -1,6 +1,7 @@
 package com.iax3m.bluetoothtracker.util.bluetooth
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.IntentFilter
@@ -29,7 +30,8 @@ class BluetoothUtil(var context: Context) {
         bluetoothManager?.adapter
     }
 
-    private val bluetoothReciever = BluetoothReciever{device ->
+    @SuppressLint("MissingPermission")
+    private val bluetoothReciever = BluetoothReciever{ device ->
         _devices.update {devices ->
             val newDevice = BluetoothDevice(device.name, device.address)
             if (newDevice in devices) devices else devices+newDevice
@@ -38,7 +40,12 @@ class BluetoothUtil(var context: Context) {
 
     }
 
+    init {
+        updatePairedDevices()
+    }
 
+
+    @SuppressLint("MissingPermission")
     fun startSearch(){
         if(!hasPermission(Manifest.permission.BLUETOOTH_SCAN)){
             return
@@ -47,10 +54,12 @@ class BluetoothUtil(var context: Context) {
             bluetoothReciever,
             IntentFilter(android.bluetooth.BluetoothDevice.ACTION_FOUND)
         )
+        updatePairedDevices()
         bluetoothAdapter?.startDiscovery()
 
     }
 
+    @SuppressLint("MissingPermission")
     fun stopSearch(){
         if(!hasPermission(Manifest.permission.BLUETOOTH_SCAN)){
             return
@@ -59,13 +68,32 @@ class BluetoothUtil(var context: Context) {
 
     }
 
-    fun relase(){
+    fun release(){
         context.unregisterReceiver(bluetoothReciever)
 
     }
 
     private fun hasPermission(permission: String): Boolean {
         return context.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun updatePairedDevices() {
+        if(!hasPermission(Manifest.permission.BLUETOOTH_CONNECT)) {
+            return
+        }
+        bluetoothAdapter
+            ?.bondedDevices
+            ?.map { toBluetoothDeviceDomain(it) }
+            ?.also { devices ->
+                _devices.update { devices }
+            }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun toBluetoothDeviceDomain(bluetoothDevice:android.bluetooth.BluetoothDevice): BluetoothDevice{
+        return BluetoothDevice(bluetoothDevice.name, bluetoothDevice.address)
+
     }
 
 }

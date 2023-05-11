@@ -15,11 +15,11 @@ class BluetoothReciever(
             android.bluetooth.BluetoothDevice.ACTION_FOUND ->{
                 val device = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     intent.getParcelableExtra(
-                        android.bluetooth.BluetoothDevice.EXTRA_NAME,
+                        android.bluetooth.BluetoothDevice.EXTRA_DEVICE,
                         android.bluetooth.BluetoothDevice::class.java
                     )
                 } else {
-                    intent.getParcelableExtra(android.bluetooth.BluetoothDevice.EXTRA_NAME)
+                    intent.getParcelableExtra(android.bluetooth.BluetoothDevice.EXTRA_DEVICE)
                 }
                 device?.let(onDeviceFound)
             }

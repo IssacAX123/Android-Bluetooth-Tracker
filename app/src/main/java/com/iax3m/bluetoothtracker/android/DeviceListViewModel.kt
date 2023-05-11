@@ -18,7 +18,7 @@ class DeviceListViewModel @Inject constructor(
     private val _state = MutableStateFlow(DeviceListUiState())
     val state = combine(bluetoothUtil.devices, _state){
         devices, state -> state.copy(devices=devices)
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(500), _state.value)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _state.value)
 
     fun startSearch(){
         bluetoothUtil.startSearch()
