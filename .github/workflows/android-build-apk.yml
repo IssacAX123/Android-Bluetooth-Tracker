@@ -17,9 +17,15 @@ jobs:
 
     - name: Create local.properties
       env:
+        AD_APP_ID: ${{ secrets.AD_APP_ID }}
         AD_MAIN_ACTIVITY_INTERSTITIAL: ${{ secrets.AD_MAIN_ACTIVITY_INTERSTITIAL }}
+        AD_DEVICE_LIST_BANNER_1: ${{ secrets.AD_DEVICE_LIST_BANNER_1 }}
+        AD_DEVICE_LIST_BANNER_2: ${{ secrets.AD_DEVICE_LIST_BANNER_2 }}
       run: |
-        echo "AD_MAIN_ACTIVITY_INTERSTITIAL=$AD_MAIN_ACTIVITY_INTERSTITIAL" > local.properties
+        echo "AD_APP_ID=$AD_APP_ID" > local.properties
+        echo "AD_MAIN_ACTIVITY_INTERSTITIAL=$AD_MAIN_ACTIVITY_INTERSTITIAL" >> local.properties
+        echo "AD_DEVICE_LIST_BANNER_1=$AD_DEVICE_LIST_BANNER_1" >> local.properties
+        echo "AD_DEVICE_LIST_BANNER_2=$AD_DEVICE_LIST_BANNER_2" >> local.properties
 
     - name: Setup Java
       uses: actions/setup-java@v3
