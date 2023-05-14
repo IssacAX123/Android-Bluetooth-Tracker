@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">BluetoothTracker</string>
+    <string name="main_btn_start">Start</string>
+    <string name="select_a_device_to_track">Select A Device To Track</string>
+    <string name="device_list">device list</string>
 </resources>

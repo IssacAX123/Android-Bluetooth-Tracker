@@ -1,7 +1,13 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'com.google.dagger.hilt.android'
 }
+
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.dagger.hilt.android'
 
 android {
     namespace 'com.iax3m.bluetoothtracker'
@@ -15,8 +21,19 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
 
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
+        buildConfigField "String", "AD_APP_ID", "\"${properties.getProperty("AD_APP_ID")}\""
+        buildConfigField "String", "AD_MAIN_ACTIVITY_INTERSTITIAL", "\"${properties.getProperty("AD_MAIN_ACTIVITY_INTERSTITIAL")}\""
+        resValue "string", "AD_DEVICE_LIST_BANNER_1", "\"${properties.getProperty("AD_DEVICE_LIST_BANNER_1")}\""
+        resValue "string", "AD_DEVICE_LIST_BANNER_2", "\"${properties.getProperty("AD_DEVICE_LIST_BANNER_2")}\""
+
+        manifestPlaceholders = [
+                AD_APP_ID: "${properties.getProperty('AD_APP_ID')}"
+        ]
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -27,18 +44,44 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    viewBinding{
+        enabled=true
+    }
+    dataBinding{
+        enabled=true
     }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.6.0'
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    implementation 'com.google.android.gms:play-services-ads:22.0.0'
+
+    implementation 'androidx.hilt:hilt-navigation-fragment:1.0.0'
+    implementation 'com.google.dagger:hilt-android:2.46'
+    kapt 'com.google.dagger:hilt-compiler:2.46'
+
+    // For instrumentation tests
+    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.46'
+    kaptAndroidTest 'com.google.dagger:hilt-compiler:2.46'
+
+    // For local unit tests
+    testImplementation 'com.google.dagger:hilt-android-testing:2.46'
+    kaptTest 'com.google.dagger:hilt-compiler:2.46'
+}
+
+kapt {
+    correctErrorTypes true
 }
