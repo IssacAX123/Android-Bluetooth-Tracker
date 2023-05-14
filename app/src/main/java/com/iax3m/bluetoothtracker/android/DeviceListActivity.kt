@@ -14,6 +14,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.iax3m.bluetoothtracker.databinding.ActivityDeviceListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -21,6 +24,8 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class DeviceListActivity : AppCompatActivity() {
     lateinit var binding:ActivityDeviceListBinding
+    lateinit var bannerTopAdView : AdView
+    lateinit var bannerBottomAdView : AdView
     val viewModel:DeviceListViewModel by viewModels()
 
     private val bluetoothManager by lazy {
@@ -38,6 +43,8 @@ class DeviceListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDeviceListBinding.inflate(layoutInflater)
         val view: View = binding.root
+        bannerTopAdView = binding.deviceListAdBanner1
+        bannerBottomAdView = binding.deviceListAdBanner2
         setContentView(view)
 
         val enableBluetoothLauncher = registerForActivityResult(
@@ -58,6 +65,11 @@ class DeviceListActivity : AppCompatActivity() {
                 android.Manifest.permission.BLUETOOTH_CONNECT
             )
         )
+        MobileAds.initialize(this) {}
+        val adRequest1 = AdRequest.Builder().build()
+        bannerTopAdView.loadAd(adRequest1)
+        val adRequest2 = AdRequest.Builder().build()
+        bannerBottomAdView.loadAd(adRequest2)
 
         viewModel.startSearch()
         lifecycleScope.launch{
