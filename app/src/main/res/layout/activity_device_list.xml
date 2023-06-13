@@ -13,27 +13,26 @@
         android:id="@+id/device_list_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="74dp"
         android:layout_marginTop="27dp"
-        android:layout_marginEnd="68dp"
         android:fontFamily="sans-serif-black"
         android:text="@string/select_a_device_to_track"
         android:textColor="#6200ED"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="VisualLintOverlap" />
 
-    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+    <com.google.android.gms.ads.AdView
         android:id="@+id/device_list_ad_banner_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/AD_DEVICE_LIST_BANNER_1"
-        app:layout_constraintBottom_toTopOf="@+id/device_list_scroll_view"
+        android:layout_marginTop="12dp"
+        app:adSize="BANNER"
+        app:adUnitId="@string/AD_DEVICE_LIST_BANNER_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,13 +40,16 @@
 
     <ScrollView
         android:id="@+id/device_list_scroll_view"
-        android:layout_width="389dp"
-        android:layout_height="509dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginHorizontal="12dp"
         android:contentDescription="@string/device_list"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/device_list_btn_scan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/device_list_title">
+        app:layout_constraintTop_toBottomOf="@+id/device_list_ad_banner_1">
 
         <LinearLayout
             android:id="@+id/device_list_scroll_view_linear_layout"
@@ -56,17 +58,32 @@
             android:orientation="vertical" />
     </ScrollView>
 
-    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/device_list_btn_scan"
+        android:layout_width="112dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="12dp"
+        android:background="#00FF00"
+        android:textColor="#6200ED"
+        android:text="@string/scan"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/device_list_ad_banner_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.gms.ads.AdView
         android:id="@+id/device_list_ad_banner_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/AD_DEVICE_LIST_BANNER_2"
+        android:layout_marginBottom="27dp"
+        app:adSize="BANNER"
+        app:adUnitId="@string/AD_DEVICE_LIST_BANNER_2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/device_list_scroll_view" />
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

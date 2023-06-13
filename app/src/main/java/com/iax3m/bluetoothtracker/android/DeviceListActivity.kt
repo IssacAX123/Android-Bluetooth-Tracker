@@ -1,8 +1,6 @@
 package com.iax3m.bluetoothtracker.android
 
-import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
-import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.iax3m.bluetoothtracker.R
 import com.iax3m.bluetoothtracker.databinding.ActivityDeviceListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -48,13 +47,17 @@ class DeviceListActivity : AppCompatActivity() {
         setContentView(view)
 
         val enableBluetoothLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()){}
+            ActivityResultContracts.RequestPermission()){granted ->
+            if (granted){
+                viewModel.startSearch()
+            }
+        }
         val permissionLauncher = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()){permissions ->
             val canEnableBluetooth = permissions[android.Manifest.permission.BLUETOOTH_CONNECT] == true
             if (canEnableBluetooth && !isBluetoothEnabled){
                 enableBluetoothLauncher.launch(
-                    Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                    android.Manifest.permission.BLUETOOTH_CONNECT
                 )
             }
         }
@@ -71,10 +74,29 @@ class DeviceListActivity : AppCompatActivity() {
         val adRequest2 = AdRequest.Builder().build()
         bannerBottomAdView.loadAd(adRequest2)
 
-        viewModel.startSearch()
+        var scanBool = true
+        val scanBtn = binding.deviceListBtnScan
+        scanBtn.setOnClickListener{
+            if (scanBool == true){
+                scanBtn.text = getString(R.string.stop)
+                scanBtn.setBackgroundColor(Color.parseColor("#CC0202"))
+                viewModel.startSearch()
+                scanBool = false
+            }else{
+                scanBtn.text = getString(R.string.scan)
+                scanBtn.setBackgroundColor(Color.parseColor("#00FF00"))
+                viewModel.stopSearch()
+                scanBool = true
+            }
+
+        }
+
+
         lifecycleScope.launch{
+
             viewModel.state.collect{state ->
                 val scrollViewConstraintLayout = binding.deviceListScrollViewLinearLayout
+                scrollViewConstraintLayout.removeAllViews()
                 state.devices.forEach{device ->
                     val button = Button(applicationContext)
                     button.text = device.name

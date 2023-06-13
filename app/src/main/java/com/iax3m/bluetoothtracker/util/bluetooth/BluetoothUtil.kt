@@ -33,8 +33,13 @@ class BluetoothUtil(var context: Context) {
     @SuppressLint("MissingPermission")
     private val bluetoothReciever = BluetoothReciever{ device ->
         _devices.update {devices ->
-            val newDevice = BluetoothDevice(device.name, device.address)
-            if (newDevice in devices) devices else devices+newDevice
+            if (device.name==null || device.address == null){
+                devices
+            }else{
+                val newDevice = BluetoothDevice(device.name, device.address)
+                if (newDevice in devices) devices else devices+newDevice
+            }
+
 
         }
 
@@ -65,11 +70,6 @@ class BluetoothUtil(var context: Context) {
             return
         }
         bluetoothAdapter?.cancelDiscovery()
-
-    }
-
-    fun release(){
-        context.unregisterReceiver(bluetoothReciever)
 
     }
 
