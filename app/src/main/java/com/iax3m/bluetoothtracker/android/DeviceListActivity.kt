@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -105,6 +106,19 @@ class DeviceListActivity : AppCompatActivity() {
                     button.setTextColor(Color.BLACK)
                     button.setPadding(24, 40, 25, 40)
                     scrollViewConstraintLayout.addView(button)
+                    button.setOnClickListener {
+                        Thread{
+                            viewModel.setBluetoothConnectionListener(device.address)
+                            Thread.sleep(1000)
+                            if (viewModel.getBluetoothConnectionStatus(device.address)){
+                                runOnUiThread{Toast.makeText(applicationContext, "Connected", Toast.LENGTH_SHORT).show()}
+                            }else{
+                                runOnUiThread { Toast.makeText(applicationContext, "Can't Connect", Toast.LENGTH_SHORT).show() }
+                            }
+                            viewModel.disconnect()
+                        }.start()
+
+                    }
                 }
             }
         }

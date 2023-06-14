@@ -2,7 +2,6 @@ package com.iax3m.bluetoothtracker.util.bluetooth
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.IntentFilter
 import kotlin.collections.emptyList
@@ -17,18 +16,11 @@ import kotlinx.coroutines.flow.update
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
-class BluetoothUtil(var context: Context) {
+class BluetoothUtil(context: Context): Util(context) {
     private val _devices= MutableStateFlow<List<BluetoothDevice>>(emptyList())
     val devices: StateFlow<List<BluetoothDevice>>
         get() = _devices.asStateFlow()
 
-    private val bluetoothManager by lazy {
-        context.getSystemService(BluetoothManager::class.java)
-    }
-
-    private val bluetoothAdapter by lazy {
-        bluetoothManager?.adapter
-    }
 
     @SuppressLint("MissingPermission")
     private val bluetoothReciever = BluetoothReciever{ device ->
@@ -39,8 +31,6 @@ class BluetoothUtil(var context: Context) {
                 val newDevice = BluetoothDevice(device.name, device.address)
                 if (newDevice in devices) devices else devices+newDevice
             }
-
-
         }
 
     }

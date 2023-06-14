@@ -27,4 +27,16 @@ class DeviceListViewModel @Inject constructor(
     fun stopSearch(){
         bluetoothUtil.stopSearch()
     }
+
+    fun setBluetoothConnectionListener(deviceAddress: String){
+        return bluetoothUtil.setBluetoothConnectionListener(deviceAddress)
+    }
+
+    fun getBluetoothConnectionStatus(deviceAddress: String): Boolean {
+        return bluetoothUtil.connectionState.value.getOrDefault(deviceAddress, false)
+    }
+
+    fun disconnect(){
+        return bluetoothUtil.disconnect()
+    }
 }
